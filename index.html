@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Love Flow 💖</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif;}
+body{
+  background: radial-gradient(circle at top,#1a001a,#000);
+  color:white;
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+.main{width:100%;max-width:380px;padding:20px;text-align:center;}
+section{display:none;margin-bottom:40px;}
+section.active{display:block;}
+
+/* COMMON STYLES */
+.avatar{width:110px;height:110px;border-radius:50%;background:#3a002a;display:flex;justify-content:center;align-items:center;font-size:45px;margin:auto;}
+button{margin-top:20px;padding:12px 25px;border:none;border-radius:30px;background:linear-gradient(90deg,#ff2f92,#ff77b7);color:white;font-size:16px;cursor:pointer;}
+.progress-bar{width:100%;height:10px;background:#2a0020;border-radius:10px;overflow:hidden;margin-top:10px;}
+.progress-fill{height:100%;width:0%;background:linear-gradient(90deg,#ff2f92,#ff77b7);}
+.card{background:linear-gradient(90deg,#3b0a2a,#5a103a);border-radius:14px;padding:15px;margin:12px 0;cursor:pointer;}
+.heart{font-size:20px;color:#ff5fa2;}
+.text{display:none;margin-top:6px;font-size:14px;}
+
+/* ---------- LITTLE NOTE ---------- */
+.note-card{
+  background: linear-gradient(180deg,#ffd6eb,#ff9fcf);
+  border-radius:18px;
+  padding:20px;
+  color:#5a1a3a;
+  cursor:pointer;
+  transition:0.4s;
+}
+.note-card.closed{display:flex;flex-direction:column;align-items:center;justify-content:center;height:220px;}
+.note-card.open .note-text{display:block;}
+.note-card.open .closed-content{display:none;}
+.heart-big{font-size:40px;margin-bottom:10px;}
+.tap{font-size:14px;opacity:0.8;}
+.note-text{font-size:14px;line-height:1.6;text-align:left;display:none;min-height:160px;white-space:pre-line;}
+
+/* ---------- TEDDY ---------- */
+.glow{width:160px;height:160px;border-radius:50%;background:radial-gradient(circle,#ff5fa2,#3b0a1f);display:flex;justify-content:center;align-items:center;margin:auto;box-shadow:0 0 25px #ff5fa2;}
+.teddy{font-size:70px;animation:dance 1.2s infinite;}
+@keyframes dance{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+
+/* RESPONSIVE */
+@media(max-width:480px){.main{padding:15px;}}
+</style>
+</head>
+<body>
+
+<div class="main">
+
+<!-- SECTION 1: PROGRESS -->
+<section class="active" id="sec1">
+  <div class="avatar">😊</div>
+  <h2 style="margin:15px 0;color:#ff5fa2;">Hey Beautiful</h2>
+  <p style="opacity:.8">Do you even know how cute you are?</p>
+  <button id="btn1">Open My Heart 💗</button>
+  <div class="progress-box" id="progressBox">
+    <p>Measuring cuteness… <span id="percent">0%</span></p>
+    <div class="progress-bar">
+      <div class="progress-fill" id="fill"></div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 2: CARDS -->
+<section id="sec2">
+  <h3>Just for you</h3>
+  <div class="card" onclick="reveal(this)">
+    <span class="heart">❤</span>
+    <div class="text">You look adorable</div>
+  </div>
+  <div class="card" onclick="reveal(this)">
+    <span class="heart">❤</span>
+    <div class="text">You have the sweetest vibe</div>
+  </div>
+
+   <div class="card" onclick="reveal(this)">
+    <span class="heart">❤</span>
+    <div class="text">You make everything feel warmer</div>
+  </div>
+  <div class="card" onclick="reveal(this)">
+    <span class="heart">❤</span>
+    <div class="text">You are genuinely special</div>
+  </div>
+  <button id="btn2" style="margin-top:20px;">Next</button>
+</section>
+
+<!-- SECTION 3: LITTLE NOTE -->
+<section id="sec3">
+  <div class="note-card closed" onclick="openLittleNote(this)">
+    <div class="closed-content">
+      <div class="heart-big">💗</div>
+      <div class="tap">Tap to open</div>
+    </div>
+    <div class="note-text" id="noteText"></div>
+  </div>
+  <button id="btn3" style="margin-top:20px;">Next</button>
+</section>
+
+<!-- SECTION 4: TEDDY -->
+<section id="sec4">
+  <div class="glow">
+    <div class="teddy">🧸</div>
+  </div>
+  <p style="margin-top:15px;font-style:italic">
+    You’ll always be special to me
+  </p>
+</section>
+
+</div>
+
+<script>
+/* SECTION 1 - PROGRESS */
+document.getElementById("btn1").onclick=function(){
+  const box=document.getElementById("progressBox");
+  const fill=document.getElementById("fill");
+  const percent=document.getElementById("percent");
+  this.style.display="none";
+  box.style.display="block";
+  let p=0;
+  const i=setInterval(()=>{
+    p++;
+    fill.style.width=p+"%";
+    percent.innerText=p+"%";
+    if(p>=100){clearInterval(i);showNext('sec2');}
+  },30);
+}
+
+/* SECTION 2 - CARDS REVEAL */
+function reveal(card){
+  card.querySelector(".heart").style.display="none";
+  card.querySelector(".text").style.display="block";
+}
+
+/* NEXT BUTTONS */
+document.getElementById("btn2").onclick=function(){
+  showNext('sec3');
+}
+document.getElementById("btn3").onclick=function(){
+  showNext('sec4');
+}
+
+/* SECTION 3 - LITTLE NOTE TYPING */
+const message = 
+`I just wanted to tell you something… you really are special in a way
+that’s hard to explain.
+
+There’s a softness in the way you talk, a sweetness in the way you smile,
+and something genuine about you that just feels good to be around.
+
+You don’t try to be anything extra — you’re just you,
+and that’s what makes you so lovely 💕`;
+let index = 0;
+function openLittleNote(card){
+  card.classList.remove("closed");
+  card.classList.add("open");
+  const textElement = document.getElementById("noteText");
+  textElement.innerHTML = "";
+  index = 0;
+  typeLetter();
+}
+function typeLetter(){
+  const textElement = document.getElementById("noteText");
+  if(index < message.length){
+    textElement.innerHTML += message.charAt(index);
+    index++;
+    setTimeout(typeLetter, 35);
+  }
+}
+
+/* FUNCTION TO SHOW NEXT SECTION */
+function showNext(nextId){
+  document.querySelectorAll('section').forEach(s=>s.classList.remove('active'));
+  document.getElementById(nextId).classList.add('active');
+}
+</script>
+
+</body>
+</html>
